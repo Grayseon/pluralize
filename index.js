@@ -1,35 +1,51 @@
+const plurals = require("./plurals.json")
+const s = "__@@PLURALIZE"
+
 function stitch(strings, values) {
-  let result = ""
-
-  strings.forEach((string, i) => {
-    result += string
-    result += values[i] ?? ''
-  })
-
-  return result
+  return strings.reduce(
+    (result, str, i) => result + str + (values[i] ?? ""),
+    ""
+  )
 }
 
-export const s = "__@@PLURALIZE"
-
-export function pluralize(strings, ...values) {
-  if (!values.includes(s)) throw new TypeError("Pluralization is unnecessary; it was never called.")
+function pluralize(strings, ...values) {
+  if (!values.includes(s)) {
+    throw new TypeError("Pluralization is unnecessary; it was never called.")
+  }
 
   let pluralized = true
+  const pluralizedStrings = [...strings]
+
   const pluralizedValues = values.map((value, i) => {
     const parsedValue = parseFloat(value)
-    if (parsedValue === 1) {
-      pluralized = false
-    } else if (value === s) {
-      const oldPluralized = pluralized
-      pluralized = true
-      if (oldPluralized) {
-        const string = strings[i].toString()
-        if(string.match(/[c|t|p]h$/)) return "es"
-        return "s"
-      } else { return "" }
+    if (!isNaN(parsedValue)) {
+      pluralized = parsedValue !== 1
     }
+
+    if (value === s) {
+      const wasPluralized = pluralized
+      pluralized = true
+      if (!wasPluralized) return ""
+
+      const before = pluralizedStrings[i]
+      const m = before.match(/([A-Za-z]+)\s*$/)
+      const rawWord = m ? m[1] : ""
+      const word = rawWord.toLowerCase()
+
+      if (plurals[word]) {
+        pluralizedStrings[i] =
+          before.slice(0, before.length - rawWord.length) + plurals[word]
+        return ""
+      }
+
+      if (/[ctp]h$/i.test(word)) return "es"
+      return "s"
+    }
+
     return value
   })
 
-  return stitch(strings, pluralizedValues)
+  return stitch(pluralizedStrings, pluralizedValues)
 }
+
+module.exports = { pluralize, s }
