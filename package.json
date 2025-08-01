@@ -4,10 +4,9 @@
   "main": "./dist/cjs/index.cjs",
   "scripts": {
     "build": "node build.mjs",
-    "test": "npm run build && cd test/cjs && node . && cd ../esm && node .",
+    "test": "npm run build && cd test && npm test",
     "format": "prettier --write ."
   },
-  "type": "module",
   "keywords": [],
   "author": "Grayseon",
   "license": "ISC",
@@ -16,8 +15,7 @@
     "@types/node": "^24.1.0",
     "esbuild": "^0.25.8",
     "esbuild-plugin-copy": "^2.1.1",
-    "prettier": "^3.6.2",
-    "rimraf": "^6.0.1"
+    "prettier": "^3.6.2"
   },
   "files": [
     "dist"
