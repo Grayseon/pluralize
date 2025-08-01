@@ -15,7 +15,7 @@ console.log(pluralize`You have ${notifications} notification${s}.`)
 
 notifications = 1
 console.log(pluralize`You now have ${notifications} notification${s}.`)
-// You have 1 notification.
+// You now have 1 notification.
 ```
 
 ## Irregular plurals
@@ -69,6 +69,7 @@ import { and } from "@grayseon/pluralize"
 const countries = ["Russia", "Canada", "the United States"]
 
 console.log(`The top 3 countries by land area are: ${and(countries)}`)
+// The top 3 countries by land area are: Russia, Canada, and the United States.
 ```
 
 You can also pass the separator and conjugation for special cases (like a super comma).
