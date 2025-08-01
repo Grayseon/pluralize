@@ -18,7 +18,7 @@ console.log(pluralize`You now have ${notifications} notification${s}.`)
 // You have 1 notification.
 ```
 
-## Rare cases
+## Irregular plurals
 
 Pluralize will respect irregular plurals, like "scarfs" being "scarves".
 
@@ -29,6 +29,8 @@ const scarves = 3
 console.log(pluralize`There are ${scarves} scarf${s}.`)
 // There are 3 scarves.
 ```
+
+## Chaining modifiers
 
 You can chain as many plural modifiers as you want. It will only be reset once another number is specified.
 
@@ -41,6 +43,20 @@ console.log(pluralize`There are ${scarves} scarf${s}. (This${s} scarf${s} is${s}
 // There are 4 scarves. (These scarves are mine.) You have 1 notification. (This notification is important.)
                         ^ maintains capitalization and ignores special characters
 ```
+
+## Forcing state
+
+You can force the pluralization state with `forcePlural` and `forceSingular`
+
+```javascript
+console.log(pluralize`${forceSingular}There is${s} ${["another", "more"]} scarf${s} in the back`)
+// There is another scarf in the back
+
+console.log(pluralize`${forcePlural}there is${s} ${["another", "more"]} scarf${s} in the back`)
+// There are more scarves in the back
+```
+
+(forceSingular/plural can go anywhere, as long as it is before what you want to force.)
 
 ## "and" joiner
 

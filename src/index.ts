@@ -1,6 +1,8 @@
 import rawPlurals from "./plurals.json"
 
 export const s = Symbol("pluralize")
+export const forcePlural = Symbol("forcePlural")
+export const forceSingular = Symbol("forceSingular")
 
 export function stitch(strings: string[], values: unknown[]) {
   return strings.reduce(
@@ -19,6 +21,20 @@ export function pluralize(strings: string[], ...values: unknown[]) {
   const updatedStrings = [...strings]
 
   const updatedValues = values.map((value, i) => {
+    if(value === forcePlural) {
+      shouldPluralize = true
+      return ""
+    }
+
+    if(value === forceSingular) {
+      shouldPluralize = false
+      return ""
+    }
+
+    if(Array.isArray(value) && value.length === 2) {
+      return shouldPluralize ? value[1] : value[0]
+    }
+
     if (value === s) {
       if (!shouldPluralize) return ""
 
