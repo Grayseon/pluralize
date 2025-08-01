@@ -23,9 +23,7 @@ function pluralize(strings, ...values) {
     }
 
     if (value === s) {
-      const wasPluralized = pluralized
-      pluralized = true
-      if (!wasPluralized) return ""
+      if (!pluralized) return ""
 
       const before = pluralizedStrings[i]
       const m = before.match(/([A-Za-z]+)\s*$/)
@@ -39,6 +37,7 @@ function pluralize(strings, ...values) {
       }
 
       if (/[ctp]h$/i.test(word)) return "es"
+      if (/y$/i.test(word)) pluralizedStrings[i] = before.slice(0, before.length - rawWord.length) + word.slice(0, -1) + "ie"
       return "s"
     }
 
