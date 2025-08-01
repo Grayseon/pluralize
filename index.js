@@ -1,5 +1,5 @@
 const plurals = require("./plurals.json")
-const s = "__@@PLURALIZE"
+const s = Symbol("pluralize") //"__@@PLURALIZE"
 
 function stitch(strings, values) {
   return strings.reduce(
@@ -17,11 +17,6 @@ function pluralize(strings, ...values) {
   const pluralizedStrings = [...strings]
 
   const pluralizedValues = values.map((value, i) => {
-    const parsedValue = parseFloat(value)
-    if (!isNaN(parsedValue)) {
-      pluralized = parsedValue !== 1
-    }
-
     if (value === s) {
       if (!pluralized) return ""
 
@@ -37,8 +32,17 @@ function pluralize(strings, ...values) {
       }
 
       if (/[ctp]h$/i.test(word)) return "es"
-      if (/y$/i.test(word)) pluralizedStrings[i] = before.slice(0, before.length - rawWord.length) + word.slice(0, -1) + "ie"
+      if (/y$/i.test(word))
+        pluralizedStrings[i] =
+          before.slice(0, before.length - rawWord.length) +
+          word.slice(0, -1) +
+          "ie"
       return "s"
+    }
+
+    const parsedValue = parseFloat(value)
+    if (!isNaN(parsedValue)) {
+      pluralized = parsedValue !== 1
     }
 
     return value
@@ -47,4 +51,16 @@ function pluralize(strings, ...values) {
   return stitch(pluralizedStrings, pluralizedValues)
 }
 
-module.exports = { pluralize, s }
+function and(values, separator = ", ", conjunction = ", and ") {
+  if (!Array.isArray(values)) throw new Error("Expected values to be an array")
+  if (!typeof separator === "string" || !typeof conjunction === "string")
+    throw new Error("Expected separator and conjunction to both be strings")
+
+  return (
+    values.slice(0,-1).join(separator) +
+    conjunction +
+    values[values.length-1]
+  )
+}
+
+module.exports = { pluralize, s, and }
