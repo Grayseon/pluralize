@@ -1,4 +1,4 @@
-import * as rawPlurals from "./plurals.json"
+import rawPlurals from "./plurals.json"
 
 export const s = Symbol("pluralize")
 

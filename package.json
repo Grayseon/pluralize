@@ -1,32 +1,30 @@
 {
   "name": "@grayseon/pluralize",
   "version": "1.0.0",
-  "main": "./dist/cjs/index.js",
+  "main": "./dist/cjs/index.cjs",
   "scripts": {
-    "clean": "rimraf dist",
-    "build:esm": "tsc --project tsconfig.json",
-    "build:cjs": "tsc --project tsconfig.cjs.json",
-    "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "test": "npm run build && cd test && node .",
+    "build": "node build.mjs",
+    "test": "npm run build && cd test/cjs && node . && cd ../esm && node .",
     "format": "prettier --write ."
   },
+  "type": "module",
   "keywords": [],
   "author": "Grayseon",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@types/node": "^24.1.0",
+    "esbuild": "^0.25.8",
+    "esbuild-plugin-copy": "^2.1.1",
     "prettier": "^3.6.2",
-    "rimraf": "^6.0.1",
-    "typescript": "^5.9.2"
+    "rimraf": "^6.0.1"
   },
   "files": [
     "dist"
   ],
-  "module": "./dist/esm/index.js",
-  "types": "./dist/esm/index.d.ts",
+  "module": "./dist/esm/index.mjs",
   "exports": {
-    "require": "./dist/cjs/index.js",
-    "import": "./dist/esm/index.js"
+    "require": "./dist/cjs/index.cjs",
+    "import": "./dist/esm/index.mjs"
   }
 }
