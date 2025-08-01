@@ -10,8 +10,10 @@ const berries = 10
 const things = ["i am tired"]
 const animals = ["cat", "dog", "tiger"]
 
-const output = pluralize`you have ${notifications} notification${s} (this${s} notification${s} is${s} important), ${antelopes} antelope${s}, ${lunches} lunch${s}, ${berries} berry${s}, and ${scarves} scarf${s}. this${s} scarf${s} is${s} mine. ${things.length} more thing${s}: ${things.join(", ")}.
+const output = pluralize`you have ${notifications} notification${s} (this${s} notification${s} is${s} important), ${antelopes} antelope${s}, ${lunches} lunch${s}, ${berries} berry${s}, and ${scarves} scarf${s}. this${s} scarf${s} is${s} mine. ${things.length} more thing${s}: ${and(things)}.
 i will now proceed to list ${animals.length} animal${s}: ${and(animals)}`
+
+console.log(output)
 
 describe("pluralization", () => {
   it("should pluralize regularly and persist the pluralization state", () => {

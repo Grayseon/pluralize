@@ -39,7 +39,14 @@ export function pluralize(strings: string[], ...values: unknown[]) {
         }
       }
 
+      if (rawWord === rawWord.toUpperCase()) {
+        replacement = replacement.toUpperCase()
+      } else if (rawWord[0] === rawWord[0].toUpperCase()) {
+        replacement = replacement[0].toUpperCase() + replacement.slice(1)
+      }
+
       updatedStrings[i] = segmentBefore.slice(0, -rawWord.length) + replacement
+
       return ""
     }
 
