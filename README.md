@@ -44,6 +44,15 @@ console.log(pluralize`There are ${scarves} scarf${s}. (This${s} scarf${s} is${s}
                         ^ maintains capitalization and ignores special characters
 ```
 
+## Overrides
+
+You can provide your own singular/plural forms with arrays.
+
+```javascript
+console.log(pluralize`${forcePlural}I can't think of ${["another", "any more"]} animal${s}...`)
+// I can't think of any more animals...
+```
+
 ## Forcing state
 
 You can force the pluralization state with `forcePlural` and `forceSingular`
