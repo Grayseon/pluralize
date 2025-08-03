@@ -1,6 +1,6 @@
 # Pluralize
 
-Make pluralizing English words waaay simpler. No more hard "check(s)" or `"challenge"+(challenges.length === 1 ? "" : "s")`!
+Make conditionally pluralizing English words automatic. No more hard "check(s)" or `"challenge"+(challenges.length === 1 ? "" : "s")`!
 
 ## Simple usage
 
@@ -16,6 +16,14 @@ console.log(pluralize`You have ${notifications} notification${s}.`)
 notifications = 1
 console.log(pluralize`You now have ${notifications} notification${s}.`)
 // You now have 1 notification.
+```
+
+When `notifications` was 5, it added plurality. When it was 1, it kept the word singular.
+Without Pluralize, that same thing would look something like this:
+
+```javascript
+const notifications = 5
+console.log(`You have ${notifications} notification${notifications === 1 ? "" : "s"}.`)
 ```
 
 ## Irregular plurals
